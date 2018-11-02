@@ -2,7 +2,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import os
 import pickle
-
+import numpy as np
 
 class Logger:
     def __init__(self, env, log_file):
@@ -49,13 +49,17 @@ class Reader:
 
     def read(self):
         end = False
-        data = []
+        observations = []
+        actions = []
 
         while not end:
             try:
                 log = pickle.load(self._log_file)
-                data.extend(log)
+                for entry in log:
+                    step = entry['step']
+                    observations.append(step[0])
+                    actions.append(step[1])
             except EOFError:
                 end = True
 
-        return data
+        return observations, actions

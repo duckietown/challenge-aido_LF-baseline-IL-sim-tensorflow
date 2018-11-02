@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from ._layers import one_residual
+from _layers import one_residual
 
 
 class TensorflowModel:
@@ -10,7 +10,7 @@ class TensorflowModel:
         self._observation = None
         self._action = None
         self._computation_graph = None
-        self._optimizer = None
+        self._optimization_op = None
 
         self.tf_session = tf.InteractiveSession()
 
@@ -29,7 +29,14 @@ class TensorflowModel:
         return np.squeeze(action)
 
     def train(self, observations, actions):
-        pass
+        _, loss = self.tf_session.run([self._optimization_op, self._loss], feed_dict={
+            self._observation: observations,
+            self._action: actions
+        })
+        return loss
+
+    def commit(self):
+        self.tf_saver.save(self.tf_session, self.tf_checkpoint)
 
     def computation_graph(self):
         model = one_residual(self._preprocessed_state, seed=self.seed)
@@ -44,10 +51,17 @@ class TensorflowModel:
 
         return model
 
+    def _optimizer(self):
+        return tf.train.AdamOptimizer()
+
+    def _loss_function(self):
+        return tf.losses.mean_squared_error(self._action, self._computation_graph)
+
     def _initialize(self, input_shape, action_shape, storage_location):
         if not self._computation_graph:
             self._create(input_shape, action_shape)
             self._storing(storage_location)
+            self.tf_session.run(tf.global_variables_initializer())
 
     def _pre_process(self):
         resize = tf.map_fn(lambda frame: tf.image.resize_images(frame, (60, 80)), self._observation)
@@ -60,6 +74,8 @@ class TensorflowModel:
         self._pre_process()
 
         self._computation_graph = self.computation_graph()
+        self._loss = self._loss_function()
+        self._optimization_op = self._optimizer().minimize(self._loss)
 
     def _storing(self, location):
         self.tf_saver = tf.train.Saver()
@@ -68,7 +84,7 @@ class TensorflowModel:
         if self.tf_checkpoint:
             self.tf_saver.restore(self.tf_session, self.tf_checkpoint)
         else:
-            raise IOError('No model found...')
+            self.tf_checkpoint = location
 
     def close(self):
         self.tf_session.close()
