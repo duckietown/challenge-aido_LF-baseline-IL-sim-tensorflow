@@ -9,6 +9,7 @@ class Logger:
         self.env = env
 
         self._log_file = open(log_file, 'wb')
+        # we log the data in a multithreaded fashion
         self._multithreaded_recording = ThreadPoolExecutor(4)
         self._recording = []
 
@@ -19,6 +20,7 @@ class Logger:
                 observation,
                 action,
             ],
+            # this is metadata, you may not use it at all, but it may be helpful for debugging purposes
             'metadata': [
                 (x, y, z, self.env.cur_angle),  # we store the pose, just in case we need it
                 reward,

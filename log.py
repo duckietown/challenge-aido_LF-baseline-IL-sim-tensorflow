@@ -8,6 +8,8 @@ from _loggers import Logger
 EPISODES = 10
 STEPS = 512
 
+DEBUG = False
+
 env = DuckietownEnv(
     map_name='udem1',  # check the Duckietown Gym documentation, there are many maps of different complexity
     max_steps=EPISODES * STEPS
@@ -29,6 +31,12 @@ for episode in range(0, EPISODES):
         observation = cv2.resize(observation, (80, 60))
         # NOTICE: OpenCV changes the order of the channels !!!
         observation = cv2.cvtColor(observation, cv2.COLOR_BGR2RGB)
+
+        # we may use this to debug our expert.
+        if DEBUG:
+            cv2.imshow('debug', observation)
+            cv2.waitKey(1)
+
         logger.log(observation, action, reward, done, info)
         # [optional] env.render() to watch the expert interaction with the environment
         # we log here
@@ -37,7 +45,7 @@ for episode in range(0, EPISODES):
 
 # we flush everything and close the file, it should be ~ 120mb
 # NOTICE: we make the log file read-only, this prevent us from erasing all collected data by mistake
-# believe me, this is an important issue... can you imagine loosing 2 GB of data? No? I do...
+# believe me, this is an important issue... can you imagine loosing 2 GB of data? No? We do...
 logger.close()
 
 env.close()

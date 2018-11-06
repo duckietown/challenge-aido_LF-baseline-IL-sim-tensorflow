@@ -9,7 +9,7 @@ ACTIONS_SHAPE = (None, 2)
 SEED = 1234
 STORAGE_LOCATION = "trained_models/behavioral_cloning"
 EPISODES = 10
-STEPS = 512
+STEPS = 65
 
 env = DuckietownEnv(
     map_name='udem1',  # check the Duckietown Gym documentation, there are many maps of different complexity
@@ -26,16 +26,21 @@ model = TensorflowModel(
 
 observation = env.reset()
 
+# we can use the gym reward to get an idea of the performance of our model
+cumulative_reward = 0.0
+
 for episode in range(0, EPISODES):
     for steps in range(0, STEPS):
         action = model.predict(observation)
         observation, reward, done, info = env.step(action)
+        cumulative_reward += reward
         if done:
             env.reset()
-        env.render()
+        # env.render()
     # we reset after each episode, or not, this really depends on you
     env.reset()
 
+print('total reward: {}, mean reward: {}'.format(cumulative_reward, cumulative_reward // EPISODES))
 # didn't look good, ah? Well, that's where you come into the stage... good luck!
 
 env.close()

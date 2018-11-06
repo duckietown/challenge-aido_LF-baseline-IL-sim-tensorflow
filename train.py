@@ -7,6 +7,7 @@ from model import TensorflowModel
 # configuration zone
 BATCH_SIZE = 32
 EPOCHS = 10
+# here we assume the observations have been resized to 60x80
 OBSERVATIONS_SHAPE = (None, 60, 80, 3)
 ACTIONS_SHAPE = (None, 2)
 SEED = 1234
