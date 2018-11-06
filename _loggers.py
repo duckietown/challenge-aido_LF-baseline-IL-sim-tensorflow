@@ -63,3 +63,6 @@ class Reader:
                 end = True
 
         return observations, actions
+
+    def close(self):
+        self._log_file.close()

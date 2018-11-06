@@ -1,6 +1,7 @@
-import math
 import numpy as np
 
+
+# parameters for the pure pursuit controller
 POSITION_THRESHOLD = 0.04
 REF_VELOCITY = 0.8
 GAIN = 10
@@ -16,7 +17,7 @@ class PurePursuitExpert:
         self.ref_velocity = ref_velocity
         self.position_threshold = position_threshold
 
-    def predict(self, observation):
+    def predict(self, observation):  # we don't really care about the observation for this implementation
         closest_point, closest_tangent = self.env.closest_curve_point(self.env.cur_pos, self.env.cur_angle)
 
         iterations = 0
