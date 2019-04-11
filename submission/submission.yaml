@@ -1,0 +1,8 @@
+challenge:
+  - aido2_LF_r2-v4
+protocol: aido2_db18_agent_1
+user-label: "Template solution using imitation learning"
+description: |
+    This is a simple template for an agent that uses Tensorflow for inference.
+
+    [This code is documented here](https://docs.duckietown.org/DT18/AIDO/out/tensorflow_template.html).
