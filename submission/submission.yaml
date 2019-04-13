@@ -1,7 +1,12 @@
 challenge:
-  - aido2_LF_r2-v4
-protocol: aido2_db18_agent_1
-user-label: "Template solution using imitation learning"
+- aido2_LF_r3-v4-z2
+- aido2_LFV_r3-v4-z2
+- aido2_LFVI_r3-v4-z2
+
+# conventions + format
+protocol: aido2_db18_agent-z2
+
+user-label: "baseline-IL-sim-tensorflow"
 description: |
     This is a simple template for an agent that uses Tensorflow for inference.
 

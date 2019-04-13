@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-from dataclasses import dataclass
-from typing import Tuple
 
 import numpy as np
 
 from aido_schemas import EpisodeStart, protocol_agent_duckiebot1, PWMCommands, Duckiebot1Commands, LEDSCommands, RGB, \
     wrap_direct, Context, Duckiebot1Observations, JPGImage
 
-import numpy as np
 expect_shape = (480, 640, 3)
 
 
@@ -16,8 +13,8 @@ class TensorflowTemplateAgent:
         from model import TfInference
         # define observation and output shapes
         self.model = TfInference(observation_shape=(1,) + expect_shape,  # this is the shape of the image we get.
-                            action_shape=(1, 2),  # we need to output v, omega.
-                            graph_location='tf_models/')  # this is the folder where our models are stored.
+                                 action_shape=(1, 2),  # we need to output v, omega.
+                                 graph_location='tf_models/')  # this is the folder where our models are stored.
         self.current_image = np.zeros(expect_shape)
 
     def init(self, context: Context):
@@ -56,10 +53,11 @@ def jpg2rgb(image_data: bytes) -> np.ndarray:
     import io
     im = Image.open(io.BytesIO(image_data))
     im = im.convert('RGB')
-    data = np.array(im) 
+    data = np.array(im)
     assert data.ndim == 3
     assert data.dtype == np.uint8
     return data
+
 
 def main():
     node = TensorflowTemplateAgent()
