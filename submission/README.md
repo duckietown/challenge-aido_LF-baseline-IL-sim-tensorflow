@@ -2,23 +2,26 @@
  
 # AI Driving Olympics
 
-<a href="http://aido.duckietown.org"><img width="200" src="https://www.duckietown.org/wp-content/uploads/2018/07/AIDO-768x512.png"/></a>
+<a href="http://aido.duckietown.org"><img width="200" src="https://www.duckietown.org/wp-content/uploads/2018/12/AIDO_no_text-e1544555660271.png"/></a>
 
 
-## Template "Tensorflow template" for challenge `aido1_LF1-v3`
 
-This is a template for one of the challenges in the [the AI Driving Olympics](http://aido.duckietown.org/).
+## Template "Imitation Learning from Simulation" for challenge [`aido_LF`][lf], [`aido_LFV`][lfv] and [`aido_LFVI`][lfvi]
 
-The [online description of this challenge is here][online].
+This is a baseline for one of the challenges in the [the AI Driving Olympics](http://aido.duckietown.org/).
 
 For submitting, please follow [the instructions available in the book][book].
  
-[book]: http://docs.duckietown.org/DT18/AIDO/out/
+[book]: http://docs.duckietown.org/DT19/AIDO/out/
 
-[online]: https://challenges.duckietown.org/v3/humans/challenges/aido1_LF1-v3
+[lf]: http://docs.duckietown.org/DT19/AIDO/out/lf.html
+
+[lfv]: http://docs.duckietown.org/DT19/AIDO/out/lf_v.html
+
+[lfvi]: http://docs.duckietown.org/DT19/AIDO/out/lf_v_i.html
 
 ## Description
 
-This is a simple template for an agent that uses Tensorflow for inference.
+This is a baseline for an agent that uses Tensorflow and imitation with logs from simulation.
 
-[This code is documented here](https://docs.duckietown.org/DT18/AIDO/out/tensorflow_template.html).
+[This code is documented here](https://docs.duckietown.org/DT19/AIDO/outembodied_il_sim.html).
