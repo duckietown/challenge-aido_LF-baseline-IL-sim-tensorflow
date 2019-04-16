@@ -1,5 +1,5 @@
 from model import TensorflowModel
-from gym_duckietown.envs import DuckietownEnv
+from env import launch_env
 
 # configuration zone
 # yes, remember the simulator give us an outrageously large image
@@ -11,11 +11,7 @@ STORAGE_LOCATION = "trained_models/behavioral_cloning"
 EPISODES = 10
 STEPS = 65
 
-env = DuckietownEnv(
-    map_name='udem1',  # check the Duckietown Gym documentation, there are many maps of different complexity
-    max_steps=EPISODES * STEPS,
-    domain_rand=False
-)
+env = launch_env()
 
 model = TensorflowModel(
     observation_shape=OBSERVATIONS_SHAPE,  # from the logs we've got
