@@ -25,6 +25,10 @@ for episode in range(0, EPISODES):
         # we use our 'expert' to predict the next action.
         action = expert.predict(None)
         observation, reward, done, info = env.step(action)
+        closest_point, _ = env.closest_curve_point(env.cur_pos, env.cur_angle)
+        if closest_point is None:
+            done = True
+            break
         # we can resize the image here
         observation = cv2.resize(observation, (80, 60))
         # NOTICE: OpenCV changes the order of the channels !!!
