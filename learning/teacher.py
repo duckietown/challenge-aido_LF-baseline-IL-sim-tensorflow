@@ -19,6 +19,8 @@ class PurePursuitExpert:
 
     def predict(self, observation):  # we don't really care about the observation for this implementation
         closest_point, closest_tangent = self.env.closest_curve_point(self.env.cur_pos, self.env.cur_angle)
+        if closest_point is None:
+            return 0.0, 0.0 # Should return done in the environment
 
         iterations = 0
         lookup_distance = self.following_distance
