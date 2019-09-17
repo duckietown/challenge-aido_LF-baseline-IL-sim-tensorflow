@@ -1,5 +1,5 @@
 import cv2
-from gym_duckietown.envs import DuckietownEnv
+from env import launch_env
 from teacher import PurePursuitExpert
 from _loggers import Logger
 
@@ -10,10 +10,8 @@ STEPS = 512
 
 DEBUG = False
 
-env = DuckietownEnv(
-    map_name='udem1',  # check the Duckietown Gym documentation, there are many maps of different complexity
-    max_steps=EPISODES * STEPS
-)
+
+env = launch_env()
 
 # this is an imperfect demonstrator... I'm sure you can construct a better one.
 expert = PurePursuitExpert(env=env)
@@ -27,6 +25,10 @@ for episode in range(0, EPISODES):
         # we use our 'expert' to predict the next action.
         action = expert.predict(None)
         observation, reward, done, info = env.step(action)
+        closest_point, _ = env.closest_curve_point(env.cur_pos, env.cur_angle)
+        if closest_point is None:
+            done = True
+            break
         # we can resize the image here
         observation = cv2.resize(observation, (80, 60))
         # NOTICE: OpenCV changes the order of the channels !!!
