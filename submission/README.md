@@ -12,16 +12,16 @@ This is a baseline for one of the challenges in the [the AI Driving Olympics](ht
 
 For submitting, please follow [the instructions available in the book][book].
  
-[book]: http://docs.duckietown.org/DT19/AIDO/out/
+[book]: http://docs.duckietown.org/daffy/AIDO/out/
 
-[lf]: http://docs.duckietown.org/DT19/AIDO/out/lf.html
+[lf]: http://docs.duckietown.org/daffy/AIDO/out/lf.html
 
-[lfv]: http://docs.duckietown.org/DT19/AIDO/out/lf_v.html
+[lfv]: http://docs.duckietown.org/daffy/AIDO/out/lf_v.html
 
-[lfvi]: http://docs.duckietown.org/DT19/AIDO/out/lf_v_i.html
+[lfvi]: http://docs.duckietown.org/daffy/AIDO/out/lf_v_i.html
 
 ## Description
 
 This is a baseline for an agent that uses Tensorflow and imitation with logs from simulation.
 
-[This code is documented here](https://docs.duckietown.org/DT19/AIDO/outembodied_il_sim.html).
+[This code is documented here](https://docs.duckietown.org/daffy/AIDO/outembodied_il_sim.html).

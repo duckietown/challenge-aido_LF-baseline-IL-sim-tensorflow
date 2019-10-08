@@ -3,5 +3,5 @@ opencv-python
 numpy
 tqdm
 opencv-python
--e git://github.com/duckietown/gym-duckietown.git@aido1_lf1_r3-v3_revision#egg=gym-duckietown
+-e git://github.com/duckietown/gym-duckietown.git@daffy#egg=gym-duckietown
 
