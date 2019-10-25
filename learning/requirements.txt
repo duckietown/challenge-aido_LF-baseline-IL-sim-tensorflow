@@ -3,4 +3,4 @@ opencv-python
 numpy
 tqdm
 opencv-python
-duckietown-gym-daffy>=5.0.6
+duckietown-gym-daffy>=5.0.7

@@ -1,8 +1,10 @@
 # Definition of Submission container
 
 # We start from tensorflow-gpu image
-FROM tensorflow/tensorflow:latest-gpu
+FROM tensorflow/tensorflow:1.13.2-gpu-py3
 
+# this line prevents interaction with tzdata package
+ENV DEBIAN_FRONTEND=noninteractive
 # from https://github.com/tensorflow/tensorflow/issues/10776
 # this may not be needed if you use pytorch image
 RUN cd /usr/local/cuda/lib64 \
