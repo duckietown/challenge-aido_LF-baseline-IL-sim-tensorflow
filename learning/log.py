@@ -45,7 +45,7 @@ for episode in range(0, EPISODES):
             cv2.waitKey(1)
 
         logger.log(observation, action, reward, done, info)
-        env.render()  #pto watch the expert interaction with the environment
+        # [optional] env.render() to watch the expert interaction with the environment
         # we log here
     logger.on_episode_done()  # speed up logging by flushing the file
     env.reset()
