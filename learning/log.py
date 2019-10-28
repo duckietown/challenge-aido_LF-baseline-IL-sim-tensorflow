@@ -2,6 +2,7 @@ import cv2
 from env import launch_env
 from teacher import PurePursuitExpert
 from _loggers import Logger
+from utils.helpers import SteeringToWheelVelWrapper
 
 # Log configuration, you can pick your own values here
 # the more the better? or the smarter the better?
@@ -10,8 +11,10 @@ STEPS = 512
 
 DEBUG = False
 
-
 env = launch_env()
+
+# To convert to wheel velocities
+wrapper = SteeringToWheelVelWrapper()
 
 # this is an imperfect demonstrator... I'm sure you can construct a better one.
 expert = PurePursuitExpert(env=env)
@@ -24,6 +27,8 @@ for episode in range(0, EPISODES):
     for steps in range(0, STEPS):
         # we use our 'expert' to predict the next action.
         action = expert.predict(None)
+        # Convert to wheel velocities
+        action = wrapper.convert(action)
         observation, reward, done, info = env.step(action)
         closest_point, _ = env.closest_curve_point(env.cur_pos, env.cur_angle)
         if closest_point is None:
