@@ -52,7 +52,7 @@ for i in epochs_bar:
 
     # every 10 epochs, we store the model we have
     # but I'm sure that you're smarter than that, what if this model is worse than the one we had before
-    if i % 20 == 0:
+    if i % 5 == 0:
         model.commit()
         avg_reward = eval(model)
         epochs_bar.set_postfix({'loss': loss / BATCH_SIZE, 'avg_rew': avg_reward})
