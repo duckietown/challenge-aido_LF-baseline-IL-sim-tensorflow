@@ -6,7 +6,7 @@ from utils.helpers import SteeringToWheelVelWrapper
 
 # Log configuration, you can pick your own values here
 # the more the better? or the smarter the better?
-EPISODES = 200
+EPISODES = 5
 STEPS = 128
 
 DEBUG = False
@@ -35,7 +35,7 @@ for episode in range(0, EPISODES):
         #     done = True
         #     break
         # we can resize the image here
-        observation = cv2.resize(observation, (80, 60))
+        observation = cv2.resize(observation, (32, 32))
         # NOTICE: OpenCV changes the order of the channels !!!
         observation = cv2.cvtColor(observation, cv2.COLOR_BGR2RGB)
 

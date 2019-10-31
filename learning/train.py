@@ -8,7 +8,7 @@ from eval import eval
 BATCH_SIZE = 32
 EPOCHS = 200
 # here we assume the observations have been resized to 60x80
-OBSERVATIONS_SHAPE = (None, 60, 80, 3)
+OBSERVATIONS_SHAPE = (None, 32, 32, 3)
 ACTIONS_SHAPE = (None, 2)
 SEED = 1234
 STORAGE_LOCATION = "trained_models/behavioral_cloning"
@@ -26,9 +26,6 @@ reader = Reader('train.log')
 
 observations, actions = reader.read()
 observations, actions = unison_shuffled_copies(np.array(observations), np.array(actions))
-# actions =  np.array(actions)
-# observations = np.array(observations)
-
 
 model = TensorflowModel(
     observation_shape=OBSERVATIONS_SHAPE,  # from the logs we've got

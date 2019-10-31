@@ -28,7 +28,7 @@ def eval(model):
 
     for episode in range(0, EPISODES):
         for steps in range(0, STEPS):
-            observation = cv2.resize(observation, (80, 60))
+            observation = cv2.resize(observation, (32, 32))
             # NOTICE: OpenCV changes the order of the channels !!!
             observation = cv2.cvtColor(observation, cv2.COLOR_BGR2RGB)
             action = model.predict(observation)

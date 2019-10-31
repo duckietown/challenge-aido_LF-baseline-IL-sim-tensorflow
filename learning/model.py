@@ -66,8 +66,8 @@ class TensorflowModel:
             self.tf_session.run(tf.global_variables_initializer())
 
     def _pre_process(self):
-        resize = tf.map_fn(lambda frame: tf.image.resize_images(frame, (60, 80)), self._observation)
-        and_standardize = tf.map_fn(lambda frame: tf.image.per_image_standardization(frame), resize)
+        # resize = tf.map_fn(lambda frame: tf.image.resize_images(frame, (60, 80)), self._observation)
+        and_standardize = tf.map_fn(lambda frame: tf.image.per_image_standardization(frame), self._observation)
         self._preprocessed_state = and_standardize
 
     def _create(self, input_shape, output_shape):
