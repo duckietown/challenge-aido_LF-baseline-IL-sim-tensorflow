@@ -4,7 +4,7 @@ L2_LAMBDA = 1e-04
 
 
 def _residual_block(x, size, dropout=False, dropout_prob=0.5, seed=None):
-    residual = tf.layers.conv2d(x, filters=size, kernel_size=size, strides=2, padding='same',
+    residual = tf.layers.conv2d(x, filters=size, kernel_size=3, strides=2, padding='same',
                                 kernel_initializer=tf.keras.initializers.he_normal(seed=seed),
                                 kernel_regularizer=tf.keras.regularizers.l2(L2_LAMBDA))
     if dropout:
@@ -38,7 +38,7 @@ def one_residual(x, keep_prob=0.5, seed=None):
     nn = tf.layers.batch_normalization(nn)
 
     nn = _residual_block(nn, 32, dropout_prob=keep_prob, seed=seed)
-    nn = _residual_block(nn, 64, dropout_prob=keep_prob, seed=seed)
-
+    # nn = _identity_block(nn, )
+    # nn = _residual_block(nn, 64, dropout_prob=keep_prob, seed=seed)
     nn = tf.layers.flatten(nn)
     return nn
