@@ -40,12 +40,12 @@ class TensorflowModel:
 
     def computation_graph(self):
         model = one_residual(self._preprocessed_state, seed=self.seed)
-        model = tf.layers.dense(model, units=64, activation=tf.nn.relu,
-                                kernel_initializer=tf.contrib.layers.xavier_initializer(uniform=False, seed=self.seed),
-                                bias_initializer=tf.contrib.layers.xavier_initializer(uniform=False, seed=self.seed))
-        model = tf.layers.dense(model, units=32, activation=tf.nn.relu,
-                                kernel_initializer=tf.contrib.layers.xavier_initializer(uniform=False, seed=self.seed),
-                                bias_initializer=tf.contrib.layers.xavier_initializer(uniform=False, seed=self.seed))
+        # model = tf.layers.dense(model, units=64, activation=tf.nn.relu,
+        #                         kernel_initializer=tf.contrib.layers.xavier_initializer(uniform=False, seed=self.seed),
+        #                         bias_initializer=tf.contrib.layers.xavier_initializer(uniform=False, seed=self.seed))
+        # model = tf.layers.dense(model, units=32, activation=tf.nn.relu,
+        #                         kernel_initializer=tf.contrib.layers.xavier_initializer(uniform=False, seed=self.seed),
+        #                         bias_initializer=tf.contrib.layers.xavier_initializer(uniform=False, seed=self.seed))
 
         model = tf.layers.dense(model, self._action.shape[1])
 
