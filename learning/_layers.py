@@ -34,11 +34,7 @@ def one_residual(x, keep_prob=0.5, seed=None):
     nn = tf.layers.conv2d(x, filters=16, kernel_size=3, strides=1, padding='valid',
                           kernel_initializer=tf.keras.initializers.he_normal(seed=seed),
                           kernel_regularizer=tf.keras.regularizers.l2(L2_LAMBDA))
-
     nn = tf.layers.batch_normalization(nn)
-
     nn = _residual_block(nn, 32, dropout_prob=keep_prob, seed=seed)
-    # nn = _identity_block(nn, )
-    # nn = _residual_block(nn, 64, dropout_prob=keep_prob, seed=seed)
     nn = tf.layers.flatten(nn)
     return nn
