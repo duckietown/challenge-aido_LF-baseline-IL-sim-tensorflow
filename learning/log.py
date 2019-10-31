@@ -6,8 +6,8 @@ from utils.helpers import SteeringToWheelVelWrapper
 
 # Log configuration, you can pick your own values here
 # the more the better? or the smarter the better?
-EPISODES = 10
-STEPS = 512
+EPISODES = 200
+STEPS = 128
 
 DEBUG = False
 
@@ -30,21 +30,24 @@ for episode in range(0, EPISODES):
         # Convert to wheel velocities
         action = wrapper.convert(action)
         observation, reward, done, info = env.step(action)
-        closest_point, _ = env.closest_curve_point(env.cur_pos, env.cur_angle)
-        if closest_point is None:
-            done = True
-            break
+        # closest_point, _ = env.closest_curve_point(env.cur_pos, env.cur_angle)
+        # if closest_point is None:
+        #     done = True
+        #     break
         # we can resize the image here
         observation = cv2.resize(observation, (80, 60))
         # NOTICE: OpenCV changes the order of the channels !!!
         observation = cv2.cvtColor(observation, cv2.COLOR_BGR2RGB)
 
         # we may use this to debug our expert.
-        if DEBUG:
-            cv2.imshow('debug', observation)
-            cv2.waitKey(1)
+        # if DEBUG:
+        #     cv2.imshow('debug', observation)
+        #     cv2.waitKey(1)
 
         logger.log(observation, action, reward, done, info)
+        if done:
+            break
+        # env.render()
         # [optional] env.render() to watch the expert interaction with the environment
         # we log here
     logger.on_episode_done()  # speed up logging by flushing the file

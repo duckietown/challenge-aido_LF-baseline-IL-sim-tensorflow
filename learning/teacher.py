@@ -1,48 +1,24 @@
-import numpy as np
+import math
 
+REF_VELOCITY = 0.35
 
-# parameters for the pure pursuit controller
-POSITION_THRESHOLD = 0.04
-REF_VELOCITY = 0.8
-GAIN = 10
-FOLLOWING_DISTANCE = 0.3
+K_P = 10
+K_D = 8.5
 
 
 class PurePursuitExpert:
-    def __init__(self, env, ref_velocity=REF_VELOCITY, position_threshold=POSITION_THRESHOLD,
-                 following_distance=FOLLOWING_DISTANCE, max_iterations=1000):
+    def __init__(self, env,
+                 ref_velocity=REF_VELOCITY):
         self.env = env
-        self.following_distance = following_distance
-        self.max_iterations = max_iterations
         self.ref_velocity = ref_velocity
-        self.position_threshold = position_threshold
 
-    def predict(self, observation):  # we don't really care about the observation for this implementation
-        closest_point, closest_tangent = self.env.closest_curve_point(self.env.cur_pos, self.env.cur_angle)
-        if closest_point is None:
-            return 0.0, 0.0 # Should return done in the environment
+    def predict(self, observation):
+        lane_pose = self.env.get_lane_pos2(self.env.cur_pos, self.env.cur_angle)
+        distance_to_road_center = lane_pose.dist
+        angle_from_straight_in_rads = lane_pose.angle_rad
 
-        iterations = 0
-        lookup_distance = self.following_distance
-        curve_point = None
-        while iterations < self.max_iterations:
-            # Project a point ahead along the curve tangent,
-            # then find the closest point to to that
-            follow_point = closest_point + closest_tangent * lookup_distance
-            curve_point, _ = self.env.closest_curve_point(follow_point, self.env.cur_angle)
+        steering = K_P * distance_to_road_center + K_D * angle_from_straight_in_rads
 
-            # If we have a valid point on the curve, stop
-            if curve_point is not None:
-                break
+        action = [self.ref_velocity, steering]
 
-            iterations += 1
-            lookup_distance *= 0.5
-
-        # Compute a normalized vector to the curve point
-        point_vec = curve_point - self.env.cur_pos
-        point_vec /= np.linalg.norm(point_vec)
-
-        dot = np.dot(self.env.get_right_vec(), point_vec)
-        steering = GAIN * -dot
-
-        return self.ref_velocity, steering
+        return action

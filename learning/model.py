@@ -49,10 +49,12 @@ class TensorflowModel:
 
         model = tf.layers.dense(model, self._action.shape[1])
 
+        # model = tf.tanh(model)
+
         return model
 
     def _optimizer(self):
-        return tf.train.AdamOptimizer()
+        return tf.train.AdamOptimizer(learning_rate=1e-2)
 
     def _loss_function(self):
         return tf.losses.mean_squared_error(self._action, self._computation_graph)
