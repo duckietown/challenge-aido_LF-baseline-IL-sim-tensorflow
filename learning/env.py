@@ -7,7 +7,7 @@ def launch_env(id=None):
         from gym_duckietown.simulator import Simulator
         env = Simulator(
             seed=123, # random seed
-            map_name="loop_empty",
+            map_name="udem1",
             max_steps=500001, # we don't want the gym to reset itself
             domain_rand=0,
             camera_width=640,
@@ -15,6 +15,8 @@ def launch_env(id=None):
             accept_start_angle_deg=4, # start close to straight
             full_transparency=True,
             distortion=True,
+            draw_curve=False,
+            draw_bbox=False,
         )
     else:
         env = gym.make(id)

@@ -6,7 +6,7 @@ from model import TensorflowModel
 from eval import eval
 # configuration zone
 BATCH_SIZE = 32
-EPOCHS = 200
+EPOCHS = 1000
 # here we assume the observations have been resized to 60x80
 OBSERVATIONS_SHAPE = (None, 32, 32, 3)
 ACTIONS_SHAPE = (None, 2)
@@ -16,16 +16,15 @@ STORAGE_LOCATION = "trained_models/behavioral_cloning"
 np.random.seed(SEED)
 
 
-def unison_shuffled_copies(a, b):
-    assert len(a) == len(b)
-    p = np.random.permutation(len(a))
-    return a[p], b[p]
+def shuffle(data, labels):
+    p = np.random.permutation(len(data))
+    return data[p], labels[p]
 
 
 reader = Reader('train.log')
 
 observations, actions = reader.read()
-observations, actions = unison_shuffled_copies(np.array(observations), np.array(actions))
+observations, actions = shuffle(np.array(observations), np.array(actions))
 
 model = TensorflowModel(
     observation_shape=OBSERVATIONS_SHAPE,  # from the logs we've got
@@ -36,6 +35,7 @@ model = TensorflowModel(
 
 # we trained for EPOCHS epochs
 epochs_bar = tqdm(range(EPOCHS))
+best_reward = float('-inf')
 for i in epochs_bar:
     # we defined the batch size, this can be adjusted according to your computing resources...
     loss = 0.0
@@ -47,13 +47,15 @@ for i in epochs_bar:
 
         epochs_bar.set_postfix({'loss': loss / BATCH_SIZE})
 
-    # every 10 epochs, we store the model we have
-    # but I'm sure that you're smarter than that, what if this model is worse than the one we had before
-    if i % 5 == 0:
-        model.commit()
-        avg_reward = eval(model)
+    # every 5 epochs, we store the model we have
+
+    if i % 10 == 0:
+        avg_reward = eval(model, display=True)
+        if avg_reward > best_reward:
+            best_reward = avg_reward
+            model.commit()
+            epochs_bar.set_description('New model saved')
         epochs_bar.set_postfix({'loss': loss / BATCH_SIZE, 'avg_rew': avg_reward})
-        epochs_bar.set_description('Model saved...')
     else:
         epochs_bar.set_description('')
 

@@ -1,4 +1,4 @@
-import math
+import numpy as np
 
 REF_VELOCITY = 0.35
 
@@ -11,6 +11,8 @@ class PurePursuitExpert:
                  ref_velocity=REF_VELOCITY):
         self.env = env
         self.ref_velocity = ref_velocity
+        self.past_dist = 0.0
+        self.past_angle = 0.0
 
     def predict(self, observation):
         lane_pose = self.env.get_lane_pos2(self.env.cur_pos, self.env.cur_angle)

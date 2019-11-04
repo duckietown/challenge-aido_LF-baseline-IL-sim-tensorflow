@@ -7,7 +7,7 @@ from utils.helpers import SteeringToWheelVelWrapper
 # Log configuration, you can pick your own values here
 # the more the better? or the smarter the better?
 EPISODES = 200
-STEPS = 128
+STEPS = 512
 
 DEBUG = False
 

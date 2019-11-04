@@ -20,13 +20,14 @@ wrapper = SteeringToWheelVelWrapper()
 env = launch_env()
 
 
-def eval(model):
-    observation = env.reset()
+def eval(model, display=False):
+
 
     # we can use the gym reward to get an idea of the performance of our model
     cumulative_reward = 0.0
 
     for episode in range(0, EPISODES):
+        observation = env.reset()
         for steps in range(0, STEPS):
             observation = cv2.resize(observation, (32, 32))
             # NOTICE: OpenCV changes the order of the channels !!!
@@ -36,7 +37,8 @@ def eval(model):
             cumulative_reward += reward
             if done:
                 env.reset()
-            # env.render()
+            if display:
+                env.render()
         # we reset after each episode, or not, this really depends on you
         env.reset()
 
