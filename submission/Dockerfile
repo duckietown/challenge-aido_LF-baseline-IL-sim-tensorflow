@@ -12,6 +12,7 @@ RUN cd /usr/local/cuda/lib64 \
     && ln -s libcuda.so libcuda.so.1 \
     && ldconfig
 
+
 # DO NOT MODIFY: your submission won't run if you do
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
          gcc \
@@ -23,11 +24,18 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
 
 # let's create our workspace, we don't want to clutter the container
 RUN mkdir /workspace
+# we make the workspace our working directory
+WORKDIR /workspace
 
 # here, we install the requirements, some requirements come by default
 # you can add more if you need to in requirements.txt
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+
+ARG PIP_INDEX_URL
+ENV PIP_INDEX_URL=${PIP_INDEX_URL}
+RUN echo PIP_INDEX_URL=${PIP_INDEX_URL}
+
+COPY requirements.* ./
+RUN pip install -r requirements.resolved
 
 # let's copy all our solution files to our workspace
 # if you have more file use the COPY command to move them to the workspace
@@ -35,11 +43,8 @@ COPY solution.py /workspace
 COPY tf_models /workspace/tf_models
 COPY model.py /workspace
 
-# we make the workspace our working directory
-WORKDIR /workspace
 
-# DO NOT MODIFY: your submission won't run if you do
-ENV DUCKIETOWN_SERVER=evaluator
+RUN PYTHONPATH=. python -c "from solution import *"
 
 # let's see what you've got there...
 CMD python solution.py
