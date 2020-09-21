@@ -47,11 +47,12 @@ class TensorflowTemplateAgent:
     def finish(self, context: Context):
         context.info('finish()')
 
+from PIL import Image
+import io
 
 def jpg2rgb(image_data: bytes) -> np.ndarray:
     """ Reads JPG bytes as RGB"""
-    from PIL import Image
-    import io
+
     im = Image.open(io.BytesIO(image_data))
     im = im.convert('RGB')
     data = np.array(im)
