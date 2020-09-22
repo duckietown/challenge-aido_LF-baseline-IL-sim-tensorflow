@@ -11,7 +11,7 @@ The [online description of this challenge is here][online].
 
 For submitting, please follow [the instructions available in the book][book].
 
-[book]: http://docs.duckietown.org/daffy/AIDO/out/
+[book]: https://docs.duckietown.org/daffy/AIDO/out/
 
 [online]: https://challenges.duckietown.org/
 
@@ -24,4 +24,4 @@ Logging, Training, and Evaluation.
 
 We leave it open to your creativity any other implementations that can be derived from baseline.
 
-For detailed instructions please see [here](http://docs.duckietown.org/daffy/AIDO/out/embodied_il_sim.html)
+For detailed instructions please see [here](https://docs.duckietown.org/daffy/AIDO/out/embodied_il_sim.html)
