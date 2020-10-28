@@ -2,8 +2,8 @@
 
 import numpy as np
 
-from aido_schemas import EpisodeStart, protocol_agent_duckiebot1, PWMCommands, Duckiebot1Commands, LEDSCommands, RGB, \
-    wrap_direct, Context, Duckiebot1Observations, JPGImage
+from aido_schemas import EpisodeStart, protocol_agent_DB20, PWMCommands, Duckiebot1Commands, LEDSCommands, RGB, \
+    wrap_direct, Context, DB20Observations, JPGImage
 
 expect_shape = (480, 640, 3)
 
@@ -26,7 +26,7 @@ class TensorflowTemplateAgent:
     def on_received_episode_start(self, context: Context, data: EpisodeStart):
         context.info(f'Starting episode "{data.episode_name}".')
 
-    def on_received_observations(self, data: Duckiebot1Observations):
+    def on_received_observations(self, data: DB20Observations):
         camera: JPGImage = data.camera
         self.current_image = jpg2rgb(camera.jpg_data)
 
@@ -63,7 +63,7 @@ def jpg2rgb(image_data: bytes) -> np.ndarray:
 
 def main():
     node = TensorflowTemplateAgent()
-    protocol = protocol_agent_duckiebot1
+    protocol = protocol_agent_DB20
     wrap_direct(node=node, protocol=protocol)
 
 
