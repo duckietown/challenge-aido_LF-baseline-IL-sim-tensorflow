@@ -51,5 +51,5 @@ COPY model.py /workspace
 
 RUN PYTHONPATH=. python -c "from solution import *"
 
-# let's see what you've got there...
+
 CMD python solution.py
