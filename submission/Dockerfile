@@ -30,7 +30,7 @@ WORKDIR /workspace
 # here, we install the requirements, some requirements come by default
 # you can add more if you need to in requirements.txt
 
-ARG PIP_INDEX_URL
+ARG PIP_INDEX_URL="https://pypi.org/simple"
 ENV PIP_INDEX_URL=${PIP_INDEX_URL}
 RUN echo PIP_INDEX_URL=${PIP_INDEX_URL}
 
